@@ -1,3 +1,4 @@
+import { useState } from "react"
 
 const restaurants = [
   {
@@ -43,6 +44,13 @@ const restaurants = [
 ]
 
 function App() {
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const filteredRestaurants = restaurants.filter((restaurant) => {
+    return restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
+  })
+
   return (
     <main className="app-shell">
       <header className="site-header">
@@ -62,29 +70,40 @@ function App() {
             <p className="eyebrow">A short list to start</p>
             <h2 id="directory-heading">Explore the directory</h2>
           </div>
-          <p className="result-count">{restaurants.length} places</p>
+          <p className="result-count">{filteredRestaurants.length} places</p>
         </div>
 
-        <div className="restaurant-grid">
-          {restaurants.map((restaurant) => (
-            <article className="restaurant-card" key={restaurant.id}>
-              <div className={`card-image ${restaurant.accent}`} aria-hidden="true">
-                <span>{restaurant.cuisine}</span>
-              </div>
-              <div className="card-content">
-                <div className="card-title-row">
-                  <h3>{restaurant.name}</h3>
-                  <span className="rating">★ {restaurant.rating}</span>
+        <input
+          type="search"
+          placeholder="Search Restaurants"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+
+        {filteredRestaurants.length === 0 ? (
+          <p>No restaurants found.</p>
+        ) : (
+          <div className="restaurant-grid">
+            {filteredRestaurants.map((restaurant) => (
+              <article className="restaurant-card" key={restaurant.id}>
+                <div className={`card-image ${restaurant.accent}`} aria-hidden="true">
+                  <span>{restaurant.cuisine}</span>
                 </div>
-                <p className="card-description">{restaurant.description}</p>
-                <div className="card-meta">
-                  <span>{restaurant.neighborhood}</span>
-                  <span>{restaurant.priceRange}</span>
+                <div className="card-content">
+                  <div className="card-title-row">
+                    <h3>{restaurant.name}</h3>
+                    <span className="rating">★ {restaurant.rating}</span>
+                  </div>
+                  <p className="card-description">{restaurant.description}</p>
+                  <div className="card-meta">
+                    <span>{restaurant.neighborhood}</span>
+                    <span>{restaurant.priceRange}</span>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   )
