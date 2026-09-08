@@ -1,4 +1,5 @@
 import { useState } from "react"
+import RestaurantCard from "./components/RestaurantCard"
 
 const restaurants = [
   {
@@ -85,25 +86,15 @@ function App() {
         ) : (
           <div className="restaurant-grid">
             {filteredRestaurants.map((restaurant) => (
-              <article className="restaurant-card" key={restaurant.id}>
-                <div className={`card-image ${restaurant.accent}`} aria-hidden="true">
-                  <span>{restaurant.cuisine}</span>
-                </div>
-                <div className="card-content">
-                  <div className="card-title-row">
-                    <h3>{restaurant.name}</h3>
-                    <span className="rating">★ {restaurant.rating}</span>
-                  </div>
-                  <p className="card-description">{restaurant.description}</p>
-                  <div className="card-meta">
-                    <span>{restaurant.neighborhood}</span>
-                    <span>{restaurant.priceRange}</span>
-                  </div>
-                </div>
-              </article>
+              <RestaurantCard
+                key={restaurant.id}
+                restaurant={restaurant}
+              />
             ))}
           </div>
         )}
+
+
       </section>
     </main>
   )
