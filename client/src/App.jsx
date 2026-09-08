@@ -49,7 +49,11 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
 
   const filteredRestaurants = restaurants.filter((restaurant) => {
-    return restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
+    return (
+      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.cuisine.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.neighborhood.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   })
 
   return (
