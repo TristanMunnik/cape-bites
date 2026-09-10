@@ -1,55 +1,41 @@
-import { useState } from "react"
 import DirectoryHeader from "./components/DirectoryHeader"
 import RestaurantList from "./components/RestaurantList"
 import SearchBar from "./components/SearchBar"
 import SiteHeader from "./components/SiteHeader"
+import { useEffect, useState } from "react"
 
-const restaurants = [
-  {
-    id: 1,
-    name: 'Kumo House',
-    cuisine: 'Japanese',
-    neighborhood: 'Gardens',
-    priceRange: '$$',
-    rating: 4.5,
-    accent: 'saffron',
-    description: 'Demo listing for ramen, small plates, and Japanese comfort food.',
-  },
-  {
-    id: 2,
-    name: 'Lotus Table',
-    cuisine: 'Vietnamese',
-    neighborhood: 'De Waterkant',
-    priceRange: '$$',
-    rating: 4.7,
-    accent: 'coral',
-    description: 'Demo listing for bright noodle bowls and fresh street-food flavours.',
-  },
-  {
-    id: 3,
-    name: 'Seoul Bird',
-    cuisine: 'Korean',
-    neighborhood: 'Woodstock',
-    priceRange: '$$$',
-    rating: 4.3,
-    accent: 'jade',
-    description: 'Demo listing for Korean barbecue, fried chicken, and shared plates.',
-  },
-  {
-    id: 4,
-    name: 'Mango & Rice',
-    cuisine: 'Thai',
-    neighborhood: 'Sea Point',
-    priceRange: '$$',
-    rating: 4.6,
-    accent: 'indigo',
-    description: 'Demo listing for fragrant curries and quick Thai-inspired lunches.',
-  },
-]
+
 
 function App() {
 
+
+  const [restaurants, setRestaurants] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    async function fetchRestaurants() {
+      try {
+        const response = await fetch('http://localhost:5000/api/restaurants')
+
+        if (!response.ok) {
+          throw new Error("failed to fetch restaurants");
+
+        }
+
+        const data = await response.json()
+        setRestaurants(data.restaurants)
+
+      } catch (err) {
+        setError('could not load restaurants')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRestaurants()
+  }, [])
 
   const filteredRestaurants = restaurants.filter((restaurant) => {
     return (
@@ -58,6 +44,9 @@ function App() {
       restaurant.neighborhood.toLowerCase().includes(searchTerm.toLowerCase())
     )
   })
+
+  if (loading) return <p>Loading restaurants...</p>
+  if (error) return <p>{error}</p>
 
   return (
     <main className="app-shell">
