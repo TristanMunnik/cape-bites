@@ -1,5 +1,8 @@
 import { useState } from "react"
-import RestaurantCard from "./components/RestaurantCard"
+import DirectoryHeader from "./components/DirectoryHeader"
+import RestaurantList from "./components/RestaurantList"
+import SearchBar from "./components/SearchBar"
+import SiteHeader from "./components/SiteHeader"
 
 const restaurants = [
   {
@@ -58,47 +61,17 @@ function App() {
 
   return (
     <main className="app-shell">
-      <header className="site-header">
-        <p className="eyebrow">Cape Town food guide</p>
-        <div className="header-row">
-          <div>
-            <h1>Cape Bites</h1>
-            <p className="intro">Find your next favourite Asian meal in the Mother City.</p>
-          </div>
-          <span className="demo-badge">Demo directory</span>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section className="directory" aria-labelledby="directory-heading">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">A short list to start</p>
-            <h2 id="directory-heading">Explore the directory</h2>
-          </div>
-          <p className="result-count">{filteredRestaurants.length} places</p>
-        </div>
+        <DirectoryHeader resultCount={filteredRestaurants.length} />
 
-        <input
-          type="search"
-          placeholder="Search Restaurants"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
+        <SearchBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
         />
 
-        {filteredRestaurants.length === 0 ? (
-          <p>No restaurants found.</p>
-        ) : (
-          <div className="restaurant-grid">
-            {filteredRestaurants.map((restaurant) => (
-              <RestaurantCard
-                key={restaurant.id}
-                restaurant={restaurant}
-              />
-            ))}
-          </div>
-        )}
-
-
+        <RestaurantList restaurants={filteredRestaurants} />
       </section>
     </main>
   )

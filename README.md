@@ -75,23 +75,6 @@ Open the app
 
 The interface will include loading, empty, and error states so users always understand what is happening.
 
-## Roadmap
-
-- [x] Initialize the Git repository
-- [x] Define the first MVP
-- [ ] Create the client and server structure
-- [ ] Build an Express health-check route
-- [ ] Connect the server to MongoDB
-- [ ] Create the Restaurant model
-- [ ] Add restaurant API routes
-- [ ] Display restaurants in React
-- [ ] Add restaurant details
-- [ ] Add authentication
-- [ ] Add reviews and ratings
-- [ ] Add focused tests
-- [ ] Improve responsive accessibility
-- [ ] Deploy the application
-
 ## Project Structure
 
 The project will be organized into separate frontend and backend applications:
