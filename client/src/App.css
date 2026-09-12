@@ -91,6 +91,12 @@ h1 {
 .restaurant-card {
   background: var(--surface);
   border: 1px solid var(--line);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+  width: 100%;
   box-shadow: 0 16px 35px rgba(38, 30, 23, 0.07);
   transition: box-shadow 180ms ease, transform 180ms ease;
 }
@@ -195,6 +201,58 @@ h1 {
   letter-spacing: 0.08em;
 }
 
+.restaurant-details {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  margin-top: 48px;
+}
+
+.back-button {
+  background: transparent;
+  border: 0;
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 22px 24px 0;
+}
+
+.details-image {
+  height: 260px;
+  margin-top: 20px;
+}
+
+.details-content {
+  padding: 28px 28px 32px;
+}
+
+.details-title-row {
+  align-items: start;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.details-title-row h2 {
+  font-size: 3rem;
+  letter-spacing: -0.05em;
+  margin: 0;
+}
+
+.details-description {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 560px;
+}
+
+.details-meta {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  display: flex;
+  gap: 24px;
+  padding-top: 16px;
+}
+
 @media (max-width: 700px) {
   .app-shell {
     padding: 0 20px 40px;
@@ -212,5 +270,14 @@ h1 {
 
   .restaurant-grid {
     grid-template-columns: 1fr;
+  }
+
+  .details-title-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .details-title-row h2 {
+    font-size: 2.3rem;
   }
 }

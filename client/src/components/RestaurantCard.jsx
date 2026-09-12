@@ -1,8 +1,8 @@
 
 
-function RestaurantCard({ restaurant }) {
+function RestaurantCard({ restaurant, onSelect }) {
     return (
-        <article className="restaurant-card">
+        <button className="restaurant-card" type="button" onClick={() => onSelect(restaurant.id)}>
             <div className={`card-image ${restaurant.accent}`} aria-hidden="true" />
             <div className="card-content">
                 <div className="card-title-row">
@@ -16,7 +16,7 @@ function RestaurantCard({ restaurant }) {
                     <span>{restaurant.priceRange}</span>
                 </div>
             </div>
-        </article>
+        </button>
     )
 }
 
