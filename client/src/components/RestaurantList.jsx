@@ -1,6 +1,6 @@
 import RestaurantCard from './RestaurantCard'
 
-function RestaurantList({ restaurants, onSelect }) {
+function RestaurantList({ restaurants }) {
     if (restaurants.length === 0) {
         return <p>No restaurants found.</p>
     }
@@ -11,7 +11,7 @@ function RestaurantList({ restaurants, onSelect }) {
                 <RestaurantCard
                     key={restaurant.id}
                     restaurant={restaurant}
-                    onSelect={onSelect}
+
                 />
             ))}
         </div>

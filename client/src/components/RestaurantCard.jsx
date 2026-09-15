@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom"
 
-
-function RestaurantCard({ restaurant, onSelect }) {
+function RestaurantCard({ restaurant }) {
     return (
-        <button className="restaurant-card" type="button" onClick={() => onSelect(restaurant.id)}>
+        <Link
+            className="restaurant-card"
+            to={`/restaurants/${restaurant.id}`}
+        >
             <div className={`card-image ${restaurant.accent}`} aria-hidden="true" />
             <div className="card-content">
                 <div className="card-title-row">
@@ -16,7 +19,7 @@ function RestaurantCard({ restaurant, onSelect }) {
                     <span>{restaurant.priceRange}</span>
                 </div>
             </div>
-        </button>
+        </Link>
     )
 }
 

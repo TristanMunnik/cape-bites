@@ -1,2 +1,9 @@
 # Local Copilot agents
 .github/agents/
+
+# Environment variables
+.env
+
+# Dependencies and build output
+node_modules/
+dist/

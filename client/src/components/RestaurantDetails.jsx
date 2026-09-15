@@ -1,9 +1,11 @@
-function RestaurantDetails({ restaurant, onBack }) {
+import { Link } from "react-router-dom"
+
+function RestaurantDetails({ restaurant }) {
     return (
         <section className="restaurant-details" aria-labelledby="restaurant-details-heading">
-            <button className="back-button" type="button" onClick={onBack}>
+            <Link className="back-button" to="/">
                 ← Back to directory
-            </button>
+            </Link>
 
             <div className={`details-image ${restaurant.accent}`} aria-hidden="true" />
 
