@@ -4,7 +4,7 @@ Cape Bites is a portfolio project for discovering and reviewing Asian restaurant
 
 The app is inspired by the idea of location-based community review platforms, while using its own brand, design, data model, and user experience.
 
-> Project status: planning and initial setup.
+> Project status: React and Express foundation complete; MongoDB integration is next.
 
 ## MVP
 
@@ -86,7 +86,35 @@ server/   Express and Node.js backend
 
 ## Local Development
 
-Setup instructions will be added once the client and server applications have been created.
+Clone the repository, then install dependencies in both applications:
+
+```bash
+cd server
+npm install
+
+cd ../client
+npm install
+```
+
+Create `server/.env` from `server/.env.example` and add your MongoDB Atlas connection string.
+Never commit the real `.env` file.
+
+Run the applications in two terminals:
+
+```bash
+# Terminal 1
+cd server
+npm run dev
+```
+
+```bash
+# Terminal 2
+cd client
+npm run dev
+```
+
+The client runs on Vite's local URL, usually `http://localhost:5173`.
+The Express API runs on `http://localhost:5000`.
 
 Environment variables will be stored in local `.env` files and will never be committed to the repository. A safe `.env.example` file will document the required variable names.
 
