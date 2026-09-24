@@ -1,31 +1,54 @@
+require('dotenv').config();
+
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const Restaurant = require('./models/Restaurant');
+
 const app = express();
-const cors = require('cors')
-const restaurants = require('./data/restaurants')
+const port = process.env.PORT || 5000;
 
-const port = 5000
+app.use(cors());
 
-app.use(cors())
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log('MongoDB connected');
+    } catch (error) {
+        console.error('MongoDB connection error:', error.message);
+        process.exit(1);
+    }
+};
+
+connectDB();
 
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok' })
-})
+    res.json({ status: 'ok' });
+});
 
-app.get('/api/restaurants', (req, res) => {
-    res.json({ restaurants })
-})
-
-app.get('/api/restaurants/:id', (req, res) => {
-    const restaurantId = Number(req.params.id)
-    const restaurant = restaurants.find((item) => item.id === restaurantId)
-
-    if (!restaurant) {
-        return res.status(404).json({ message: 'Restaurant not found' })
+app.get('/api/restaurants', async (req, res) => {
+    try {
+        const restaurants = await Restaurant.find().sort({ rating: -1, name: 1 });
+        res.json({ restaurants });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch restaurants', error: error.message });
     }
+});
 
-    res.json({ restaurant })
-})
+app.get('/api/restaurants/:id', async (req, res) => {
+    try {
+        const restaurant = await Restaurant.findOne({ id: Number(req.params.id) });
+
+        if (!restaurant) {
+            return res.status(404).json({ message: 'Restaurant not found' });
+        }
+
+        res.json({ restaurant });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch restaurant', error: error.message });
+    }
+});
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
-})
+    console.log(`Server is running on port ${port}`);
+});
