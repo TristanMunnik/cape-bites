@@ -16,13 +16,21 @@ function RestaurantDetails({ restaurant }) {
                         <h2 id="restaurant-details-heading">{restaurant.name}</h2>
                         <p className="card-cuisine">{restaurant.cuisine}</p>
                     </div>
-                    <span className="rating">★ {restaurant.rating}</span>
+                    <span className="rating">
+                        {restaurant.rating == null ? 'No reviews' : `★ ${restaurant.rating}`}
+                    </span>
                 </div>
                 <p className="details-description">{restaurant.description}</p>
                 <div className="details-meta">
                     <span>{restaurant.neighborhood}</span>
                     <span>{restaurant.priceRange}</span>
                 </div>
+                {restaurant.address && <p>{restaurant.address}</p>}
+                {restaurant.website && (
+                    <a href={restaurant.website} target="_blank" rel="noreferrer">
+                        Restaurant website
+                    </a>
+                )}
             </div>
         </section>
     )

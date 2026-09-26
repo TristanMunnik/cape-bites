@@ -10,7 +10,9 @@ function RestaurantCard({ restaurant }) {
             <div className="card-content">
                 <div className="card-title-row">
                     <h3>{restaurant.name}</h3>
-                    <span className="rating">★ {restaurant.rating}</span>
+                    <span className="rating">
+                        {restaurant.rating == null ? 'No reviews' : `★ ${restaurant.rating}`}
+                    </span>
                 </div>
                 <p className="card-cuisine">{restaurant.cuisine}</p>
                 <p className="card-description">{restaurant.description}</p>

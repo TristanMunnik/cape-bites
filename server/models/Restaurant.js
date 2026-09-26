@@ -22,6 +22,21 @@ const restaurantSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        address: {
+            type: String,
+            trim: true,
+            default: '',
+        },
+        website: {
+            type: String,
+            trim: true,
+            default: '',
+        },
+        sourceUrl: {
+            type: String,
+            trim: true,
+            default: '',
+        },
         priceRange: {
             type: String,
             required: true,
@@ -31,7 +46,6 @@ const restaurantSchema = new mongoose.Schema(
             type: Number,
             min: 0,
             max: 5,
-            default: 4.5,
         },
         accent: {
             type: String,

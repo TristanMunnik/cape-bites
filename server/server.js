@@ -10,17 +10,20 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 
-const connectDB = async () => {
+const startServer = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
         console.log('MongoDB connected');
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
     } catch (error) {
         console.error('MongoDB connection error:', error.message);
         process.exit(1);
     }
 };
 
-connectDB();
+startServer();
 
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok' });
@@ -47,8 +50,4 @@ app.get('/api/restaurants/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch restaurant', error: error.message });
     }
-});
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
 });
