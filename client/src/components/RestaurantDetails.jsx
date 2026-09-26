@@ -7,7 +7,7 @@ function RestaurantDetails({ restaurant }) {
         <section className="restaurant-details" aria-labelledby="restaurant-details-heading">
             <button className="back-button" onClick={() => navigate('/')} type="button">
                 <span aria-hidden="true">←</span>
-                Back to directory
+                Home
             </button>
 
             <div className={`details-image ${restaurant.accent}`} aria-hidden="true" />
