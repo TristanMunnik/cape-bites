@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import DirectoryHeader from "../components/DirectoryHeader"
+import RestaurantMap from "../components/RestaurantMap"
 import RestaurantList from "../components/RestaurantList"
 import SearchBar from "../components/SearchBar"
 import SiteHeader from "../components/SiteHeader"
@@ -9,6 +10,7 @@ function RestaurantDirectory() {
     const [searchTerm, setSearchTerm] = useState('')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
+    const [mobileView, setMobileView] = useState('list')
 
     useEffect(() => {
         async function fetchRestaurants() {
@@ -56,9 +58,40 @@ function RestaurantDirectory() {
                     onSearchChange={setSearchTerm}
                 />
 
-                <RestaurantList
-                    restaurants={filteredRestaurants}
-                />
+                <div className="directory-view-toggle" role="tablist" aria-label="Directory view">
+                    <button
+                        type="button"
+                        role="tab"
+                        aria-selected={mobileView === 'list'}
+                        onClick={() => setMobileView('list')}
+                    >
+                        List
+                    </button>
+                    <button
+                        type="button"
+                        role="tab"
+                        aria-selected={mobileView === 'map'}
+                        onClick={() => setMobileView('map')}
+                    >
+                        Map
+                    </button>
+                </div>
+
+                <div className="directory-explorer">
+                    <section
+                        className={`directory-list-panel ${mobileView === 'list' ? 'is-mobile-visible' : 'is-mobile-hidden'}`}
+                        aria-label="Restaurant results"
+                    >
+                        <RestaurantList restaurants={filteredRestaurants} />
+                    </section>
+                    <RestaurantMap
+                        restaurants={filteredRestaurants}
+                        visible={
+                            mobileView === 'map' ||
+                            window.matchMedia('(min-width: 701px)').matches
+                        }
+                    />
+                </div>
             </section>
         </main>
     )

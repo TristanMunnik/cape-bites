@@ -27,6 +27,22 @@ const restaurantSchema = new mongoose.Schema(
             trim: true,
             default: '',
         },
+        location: {
+            type: {
+                type: String,
+                enum: ['Point'],
+            },
+            coordinates: {
+                type: [Number],
+                default: undefined,
+                validate: {
+                    validator(coordinates) {
+                        return !coordinates || coordinates.length === 2;
+                    },
+                    message: 'Coordinates must contain longitude and latitude.',
+                },
+            },
+        },
         website: {
             type: String,
             trim: true,

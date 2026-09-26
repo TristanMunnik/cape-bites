@@ -7,7 +7,7 @@ function SiteHeader() {
                     <h1>Cape Bites</h1>
                     <p className="intro">Find your next favourite Asian meal in the Mother City.</p>
                 </div>
-                <span className="demo-badge">Demo directory</span>
+                <span className="demo-badge">Restaurant guide</span>
             </div>
         </header>
     )

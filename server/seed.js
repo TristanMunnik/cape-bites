@@ -10,6 +10,7 @@ const seedRestaurants = [
         cuisine: 'Japanese',
         neighborhood: 'Gardens',
         address: '11 Kloof Nek Road, Gardens, Cape Town, 8001',
+        location: { type: 'Point', coordinates: [18.4083956, -33.9300716] },
         website: 'https://kyotogarden.co.za/',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -25,6 +26,7 @@ const seedRestaurants = [
         cuisine: 'Asian tapas',
         neighborhood: 'City Centre',
         address: '58 Burg Street, Cape Town, 8000',
+        location: { type: 'Point', coordinates: [18.41900253, -33.92356873] },
         website: 'https://bukhara.com/haiku/',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -40,6 +42,7 @@ const seedRestaurants = [
         cuisine: 'Asian fusion',
         neighborhood: 'Gardens',
         address: 'Shop 11, Kloof Street Village, Rheede Street, Gardens, Cape Town, 8001',
+        location: { type: 'Point', coordinates: [18.4122355, -33.9291672] },
         website: 'https://www.thewokbar.com/',
         sourceUrl: 'https://www.thewokbar.com/locations/',
         priceRange: 'Price not listed',
@@ -55,6 +58,7 @@ const seedRestaurants = [
         cuisine: 'Japanese and Chinese',
         neighborhood: 'Observatory',
         address: '40 Trill Road, Observatory, Cape Town, 7925',
+        location: { type: 'Point', coordinates: [18.4694129, -33.9392219] },
         website: 'https://www.1890housesushi.co.za/',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -70,6 +74,7 @@ const seedRestaurants = [
         cuisine: 'Japanese',
         neighborhood: 'City Centre',
         address: '165 Longmarket Street, Cape Town, 8001',
+        location: { type: 'Point', coordinates: [18.4188932, -33.922337] },
         website: 'https://www.tjingtjing.co.za/',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -115,6 +120,7 @@ const seedRestaurants = [
         cuisine: 'Japanese and Asian',
         neighborhood: 'Claremont',
         address: '6 Cavendish Street, Claremont, Cape Town',
+        location: { type: 'Point', coordinates: [18.462116, -33.980189] },
         website: 'https://www.salushi.com/',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -130,6 +136,7 @@ const seedRestaurants = [
         cuisine: 'Chinese',
         neighborhood: 'City Centre',
         address: '289 Long Street, Cape Town, 8001',
+        location: { type: 'Point', coordinates: [18.4147409, -33.9265519] },
         website: '',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -145,6 +152,7 @@ const seedRestaurants = [
         cuisine: 'Japanese and Thai',
         neighborhood: 'Observatory',
         address: '109 Lower Main Road, Observatory, Cape Town, 7925',
+        location: { type: 'Point', coordinates: [18.4689469, -33.9390794] },
         website: '',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -160,6 +168,7 @@ const seedRestaurants = [
         cuisine: 'Asian',
         neighborhood: 'Woodstock',
         address: '357 Albert Road, Woodstock, Cape Town, 7925',
+        location: { type: 'Point', coordinates: [18.4561851, -33.9273831] },
         website: '',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -175,6 +184,7 @@ const seedRestaurants = [
         cuisine: 'Asian noodles',
         neighborhood: 'Gardens',
         address: '50 Kloof Street, Gardens, Cape Town, 8001',
+        location: { type: 'Point', coordinates: [18.4112182, -33.9293555] },
         website: 'https://www.noodlebox.co.za/',
         sourceUrl: 'https://www.capetourism.com/cape-town-asian-restaurants/',
         priceRange: 'Price not listed',
@@ -191,10 +201,17 @@ const seedDatabase = async () => {
         await mongoose.connect(process.env.MONGO_URI);
         console.log('MongoDB connected for seeding');
 
-        await Restaurant.deleteMany({});
-        const restaurants = await Restaurant.insertMany(seedRestaurants);
+        await Restaurant.bulkWrite(
+            seedRestaurants.map((restaurant) => ({
+                updateOne: {
+                    filter: { id: restaurant.id },
+                    update: { $set: restaurant },
+                    upsert: true,
+                },
+            }))
+        );
 
-        console.log(`${restaurants.length} restaurants seeded successfully`);
+        console.log(`${seedRestaurants.length} restaurants seeded successfully`);
         process.exit(0);
     } catch (error) {
         console.error('Seed error:', error.message);

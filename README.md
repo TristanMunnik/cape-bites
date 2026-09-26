@@ -4,7 +4,7 @@ Cape Bites is a portfolio project for discovering and reviewing Asian restaurant
 
 The app is inspired by the idea of location-based community review platforms, while using its own brand, design, data model, and user experience.
 
-> Project status: React and Express foundation complete; MongoDB integration is next.
+> Project status: React and Express foundation complete; restaurant data is stored in MongoDB Atlas and the directory includes an interactive Mapbox map. Reviews and authentication are planned.
 
 ## MVP
 
@@ -99,6 +99,8 @@ npm install
 Create `server/.env` from `server/.env.example` and add your MongoDB Atlas connection string.
 Never commit the real `.env` file.
 
+Create `client/.env` and set `VITE_MAPBOX_ACCESS_TOKEN` to a Mapbox public access token. Restrict the token to your local and deployed website URLs in your Mapbox account. Restart Vite after changing environment variables. Never commit the real `.env` file.
+
 Run the applications in two terminals:
 
 ```bash
@@ -134,4 +136,4 @@ This project is being built to demonstrate practical full-stack development skil
 
 ## Data Note
 
-Restaurant details and review content should be verified before being presented as real-world information. Seed data used during development will be clearly labelled as demo data.
+Restaurant listings are sourced from public restaurant and tourism listings and should be checked for current details. Reviews in Cape Bites should be written by app users; do not copy reviews from other platforms.

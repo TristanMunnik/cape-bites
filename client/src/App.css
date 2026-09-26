@@ -5,8 +5,18 @@
 }
 
 .site-header {
-  padding: 72px 0 64px;
-  border-bottom: 1px solid var(--line);
+  align-items: stretch;
+  background-image:
+    linear-gradient(90deg, rgba(25, 28, 24, 0.86), rgba(25, 28, 24, 0.54) 58%, rgba(25, 28, 24, 0.24)),
+    url("https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1800&q=85");
+  background-position: center 56%;
+  background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 320px;
+  padding: 42px;
 }
 
 .eyebrow {
@@ -35,22 +45,29 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(3.4rem, 9vw, 7rem);
-  letter-spacing: -0.07em;
-  line-height: 0.9;
+  color: #fff;
+  font-size: 5.5rem;
+  letter-spacing: 0;
+  line-height: 0.98;
   margin: 0 0 20px;
 }
 
+.site-header > .eyebrow {
+  color: #ffd6a4;
+}
+
 .intro {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
-  max-width: 360px;
+  margin-bottom: 0;
+  max-width: 390px;
 }
 
 .demo-badge {
   align-self: flex-start;
-  background: var(--ink);
-  color: var(--paper);
+  background: rgba(24, 26, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -80,6 +97,179 @@ h1 {
 .result-count {
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.search-bar {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  box-shadow: 0 5px 18px rgba(38, 30, 23, 0.06);
+  display: flex;
+  gap: 13px;
+  margin: 0 0 28px;
+  max-width: 680px;
+  min-height: 56px;
+  padding: 0 17px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(194, 79, 50, 0.14), 0 7px 20px rgba(38, 30, 23, 0.08);
+}
+
+.search-icon {
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+  flex: 0 0 auto;
+  height: 15px;
+  position: relative;
+  width: 15px;
+}
+
+.search-icon::after {
+  background: var(--muted);
+  content: '';
+  height: 7px;
+  position: absolute;
+  right: -4px;
+  top: 10px;
+  transform: rotate(-45deg);
+  width: 2px;
+}
+
+.search-bar input {
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  flex: 1;
+  font: inherit;
+  min-width: 0;
+  outline: 0;
+  padding: 14px 0;
+}
+
+.search-bar input::placeholder {
+  color: #898378;
+  opacity: 1;
+}
+
+.search-bar input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.directory-view-toggle {
+  display: none;
+}
+
+.directory-explorer {
+  align-items: start;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.95fr);
+}
+
+.directory-list-panel .restaurant-grid {
+  grid-template-columns: 1fr;
+}
+
+.map-panel {
+  position: sticky;
+  top: 20px;
+}
+
+.map-panel-heading {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.map-panel-heading .eyebrow {
+  margin-bottom: 6px;
+}
+
+.map-panel-heading h2 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.map-panel-heading>span,
+.map-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.restaurant-map {
+  border: 1px solid var(--line);
+  height: 620px;
+  isolation: isolate;
+  width: 100%;
+  z-index: 0;
+}
+
+.restaurant-map-marker {
+  appearance: none;
+  background: #c44f32;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  box-shadow: 0 2px 7px rgba(32, 36, 31, 0.35);
+  cursor: pointer;
+  display: block;
+  height: 22px;
+  padding: 0;
+  transform: rotate(-45deg);
+  width: 22px;
+}
+
+.restaurant-map-marker:focus-visible {
+  outline: 3px solid #243c34;
+  outline-offset: 3px;
+}
+
+.map-token-notice {
+  align-content: center;
+  background: #edf0e9;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  display: grid;
+  gap: 10px;
+  height: 620px;
+  justify-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.map-token-notice span {
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 360px;
+}
+
+.map-token-notice code {
+  color: var(--ink);
+  font-size: 0.9em;
+}
+
+.restaurant-map-popup {
+  display: grid;
+  gap: 6px;
+}
+
+.restaurant-map-popup span {
+  color: #5f625c;
+  font-size: 0.8rem;
+}
+
+.restaurant-map-popup a {
+  color: #a23d26;
+  font-weight: 700;
+}
+
+.map-note {
+  line-height: 1.5;
+  margin: 9px 0 0;
 }
 
 .restaurant-grid {
@@ -215,18 +405,35 @@ h1 {
 }
 
 .back-button {
-  background: transparent;
-  border: 0;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
   color: var(--accent);
   cursor: pointer;
+  display: inline-flex;
   font: inherit;
   font-weight: 700;
-  padding: 22px 24px 0;
+  gap: 9px;
+  margin: 22px 24px 0;
+  padding: 10px 14px;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.back-button:hover {
+  background: #fff5ea;
+  border-color: var(--accent);
+  transform: translateX(-2px);
+}
+
+.back-button:focus-visible {
+  outline: 3px solid rgba(194, 79, 50, 0.25);
+  outline-offset: 2px;
 }
 
 .details-image {
   height: 260px;
-  margin-top: 20px;
+  margin-top: 14px;
 }
 
 .details-content {
@@ -266,7 +473,12 @@ h1 {
   }
 
   .site-header {
-    padding: 44px 0 42px;
+    min-height: 300px;
+    padding: 34px 24px;
+  }
+
+  h1 {
+    font-size: 3.4rem;
   }
 
   .header-row {
@@ -277,6 +489,52 @@ h1 {
 
   .restaurant-grid {
     grid-template-columns: 1fr;
+  }
+
+  .directory-view-toggle {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 0 18px;
+    padding: 4px;
+  }
+
+  .directory-view-toggle button {
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    cursor: pointer;
+    font: inherit;
+    min-height: 42px;
+  }
+
+  .directory-view-toggle button[aria-selected="true"] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .directory-explorer {
+    display: block;
+  }
+
+  .directory-list-panel.is-mobile-hidden,
+  .map-panel.is-mobile-hidden {
+    display: none;
+  }
+
+  .map-panel {
+    position: static;
+  }
+
+  .restaurant-map {
+    height: min(68vh, 560px);
+    min-height: 380px;
+  }
+
+  .map-token-notice {
+    height: min(68vh, 560px);
+    min-height: 380px;
   }
 
   .details-title-row {

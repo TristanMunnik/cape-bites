@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function RestaurantDetails({ restaurant }) {
+    const navigate = useNavigate()
+
     return (
         <section className="restaurant-details" aria-labelledby="restaurant-details-heading">
-            <Link className="back-button" to="/">
-                ← Back to directory
-            </Link>
+            <button className="back-button" onClick={() => navigate('/')} type="button">
+                <span aria-hidden="true">←</span>
+                Back to directory
+            </button>
 
             <div className={`details-image ${restaurant.accent}`} aria-hidden="true" />
 
