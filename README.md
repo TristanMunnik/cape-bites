@@ -4,7 +4,7 @@ Cape Bites is a portfolio project for discovering and reviewing Asian restaurant
 
 The app is inspired by the idea of location-based community review platforms, while using its own brand, design, data model, and user experience.
 
-> Project status: React and Express foundation complete; restaurant data is stored in MongoDB Atlas and the directory includes an interactive Mapbox map. Reviews and authentication are planned.
+> Project status: React and Express foundation complete; restaurant data is stored in MongoDB Atlas, the directory includes an interactive Mapbox map, and account registration/login are implemented. Reviews are planned.
 
 ## MVP
 
@@ -44,7 +44,7 @@ Open the app
 
 - Username
 - Email
-- Password
+- Bcrypt password hash
 
 ### Restaurant
 
@@ -96,7 +96,9 @@ cd ../client
 npm install
 ```
 
-Create `server/.env` from `server/.env.example` and add your MongoDB Atlas connection string.
+Create `server/.env` from `server/.env.example`, add your MongoDB Atlas connection string,
+and replace `SESSION_SECRET` with a random secret of at least 32 characters. You can generate
+one with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`.
 Never commit the real `.env` file.
 
 Create `client/.env` and set `VITE_MAPBOX_ACCESS_TOKEN` to a Mapbox public access token. Restrict the token to your local and deployed website URLs in your Mapbox account. Restart Vite after changing environment variables. Never commit the real `.env` file.
@@ -117,6 +119,11 @@ npm run dev
 
 The client runs on Vite's local URL, usually `http://localhost:5173`.
 The Express API runs on `http://localhost:5000`.
+
+Authentication uses server-side sessions stored in MongoDB. The browser receives an HttpOnly
+session cookie; passwords are stored as bcrypt hashes, never as plain text. The API provides
+`POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`, and
+`GET /api/auth/me`.
 
 Environment variables will be stored in local `.env` files and will never be committed to the repository. A safe `.env.example` file will document the required variable names.
 

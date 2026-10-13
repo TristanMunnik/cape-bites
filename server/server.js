@@ -1,53 +1,36 @@
 require('dotenv').config();
 
-const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const Restaurant = require('./models/Restaurant');
+const MongoStore = require('connect-mongo');
+const { createApp } = require('./app');
 
-const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
-
-const startServer = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log('MongoDB connected');
-        app.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
-        });
-    } catch (error) {
-        console.error('MongoDB connection error:', error.message);
-        process.exit(1);
+async function startServer() {
+    if (!process.env.MONGO_URI) {
+        throw new Error('MONGO_URI must be set before starting the server.');
     }
-};
 
-startServer();
-
-app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok' });
-});
-
-app.get('/api/restaurants', async (req, res) => {
-    try {
-        const restaurants = await Restaurant.find().sort({ rating: -1, name: 1 });
-        res.json({ restaurants });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch restaurants', error: error.message });
+    if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
+        throw new Error('SESSION_SECRET must contain at least 32 characters.');
     }
-});
 
-app.get('/api/restaurants/:id', async (req, res) => {
-    try {
-        const restaurant = await Restaurant.findOne({ id: Number(req.params.id) });
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB connected');
 
-        if (!restaurant) {
-            return res.status(404).json({ message: 'Restaurant not found' });
-        }
+    const sessionStore = MongoStore.create({
+        clientPromise: Promise.resolve(mongoose.connection.getClient()),
+        collectionName: 'sessions',
+        ttl: 14 * 24 * 60 * 60,
+    });
+    const app = createApp({ sessionStore });
 
-        res.json({ restaurant });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch restaurant', error: error.message });
-    }
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+}
+
+startServer().catch((error) => {
+    console.error('Server startup failed:', error.message);
+    process.exit(1);
 });
