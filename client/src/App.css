@@ -11,12 +11,17 @@
     url("https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1800&q=85");
   background-position: center 56%;
   background-size: cover;
-  border: 1px solid rgba(255, 255, 255, 0.16);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 320px;
-  padding: 42px;
+  min-height: 420px;
+  padding: 56px 32px;
+}
+
+.site-header-content {
+  margin: 0 auto;
+  max-width: 1056px;
+  width: 100%;
 }
 
 .eyebrow {
@@ -28,7 +33,6 @@
   text-transform: uppercase;
 }
 
-.header-row,
 .section-heading,
 .card-title-row,
 .card-meta {
@@ -46,33 +50,41 @@ h3 {
 
 h1 {
   color: #fff;
-  font-size: 5.5rem;
-  letter-spacing: 0;
+  font-size: clamp(3.2rem, 8vw, 5rem);
+  letter-spacing: -0.01em;
   line-height: 0.98;
   margin: 0 0 20px;
 }
 
-.site-header > .eyebrow {
+.site-header .eyebrow {
   color: #ffd6a4;
 }
 
 .intro {
   color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
-  margin-bottom: 0;
+  margin: 0 0 26px;
   max-width: 390px;
 }
 
-.demo-badge {
-  align-self: flex-start;
-  background: rgba(24, 26, 23, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+.hero-link {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
   color: #fff;
-  font-size: 0.75rem;
+  display: inline-block;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 10px 14px;
-  text-transform: uppercase;
+  padding: 12px 22px;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.hero-link:hover {
+  background: #8f1d17;
+}
+
+.hero-link:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
 }
 
 .directory {
@@ -655,18 +667,8 @@ h1 {
   }
 
   .site-header {
-    min-height: 300px;
-    padding: 34px 24px;
-  }
-
-  h1 {
-    font-size: 3.4rem;
-  }
-
-  .header-row {
-    align-items: start;
-    flex-direction: column;
-    gap: 24px;
+    min-height: 340px;
+    padding: 40px 20px;
   }
 
   .restaurant-grid {

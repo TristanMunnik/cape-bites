@@ -48,10 +48,10 @@ function RestaurantDirectory() {
     if (error) return <p>{error}</p>
 
     return (
-        <main className="app-shell">
+        <main>
             <SiteHeader />
 
-            <section className="directory" aria-labelledby="directory-heading">
+            <section className="directory app-shell" aria-labelledby="directory-heading">
                 <DirectoryHeader resultCount={filteredRestaurants.length} />
 
                 <SearchBar
