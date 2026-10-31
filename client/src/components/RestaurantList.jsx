@@ -2,7 +2,12 @@ import RestaurantCard from './RestaurantCard'
 
 function RestaurantList({ restaurants }) {
     if (restaurants.length === 0) {
-        return <p>No restaurants found.</p>
+        return (
+            <div className="status-message">
+                <h3>No restaurants found</h3>
+                <p>Try a different search, or set the cuisine filter back to All.</p>
+            </div>
+        )
     }
 
     return (
