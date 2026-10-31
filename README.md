@@ -1,6 +1,6 @@
 # Cape Bites
 
-Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Town, South Africa. Browse restaurants on a list or an interactive map, search them, and create an account. Restaurant reviews are the next feature.
+Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Town, South Africa. Browse restaurants on a list or an interactive map, search and filter them by cuisine, and create an account. Restaurant reviews are the next feature.
 
 **Live demo:** _coming soon_
 
@@ -10,17 +10,19 @@ Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Tow
 
 - Restaurant directory backed by MongoDB Atlas, with real Cape Town listings
 - Search by name, cuisine, or neighborhood, with cuisine filter chips
-- Interactive Mapbox map synced with the search results
-- Restaurant details pages with client-side routing
+- Interactive Mapbox map that stays in sync with the search and filters
+- Restaurant cards and details pages with photos, cuisine pills, and tags
 - Account registration, login, and logout using server-side sessions
 - Responsive layout with a list/map toggle on small screens
-- Loading, empty, and error states
+- Loading skeletons, empty states, and error messages with a retry button
+- Fallback colours when a restaurant photo fails to load
+- Keyboard focus styles and reduced-motion support
 
 ## Tech Stack
 
 | Layer    | Technology                                                       |
 | -------- | ---------------------------------------------------------------- |
-| Frontend | React 19, React Router, Vite, Mapbox GL (react-map-gl)           |
+| Frontend | React 19, React Router, Vite, Mapbox GL (react-map-gl), plain CSS |
 | Backend  | Node.js, Express 5                                               |
 | Database | MongoDB Atlas with Mongoose                                      |
 | Auth     | express-session, connect-mongo session store, bcryptjs           |
@@ -30,6 +32,10 @@ Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Tow
 
 ```text
 client/   React frontend (Vite)
+  src/components/   Reusable UI (cards, filters, map, status messages)
+  src/pages/        Route-level pages
+  src/context/      Authentication state
+  src/lib/          API base URL and request helpers
 server/   Express API
   models/   Mongoose models (User, Restaurant)
   routes/   Route modules (auth)
@@ -121,6 +127,8 @@ Base URL: `http://localhost:5000/api`
 - **Passwords** are hashed with bcrypt (cost 12). Inputs are validated on the server, and the session ID is regenerated on login to prevent session fixation.
 - **GeoJSON `location` field** on each restaurant, ready for map rendering and geospatial queries.
 - **App factory (`createApp`)** takes its session store and user model as arguments, so tests can run the real app without a live database.
+- **CSS variables for theming.** Colours, fonts, and corner sizes are defined once in `client/src/index.css`, so the whole theme can change by editing a few values. No UI library is used.
+- **Filters derived from the data.** The cuisine chips are built from each restaurant's `tags`, so a new cuisine appears in the filter without any client changes.
 
 ## Roadmap
 
