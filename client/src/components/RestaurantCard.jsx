@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import RestaurantImage from "./RestaurantImage"
 
 function RestaurantCard({ restaurant }) {
+    const tags = restaurant.tags.filter((tag) => tag !== restaurant.cuisine)
+
     return (
         <Link
             className="restaurant-card"
@@ -17,6 +19,11 @@ function RestaurantCard({ restaurant }) {
                 </div>
                 <p className="card-cuisine">{restaurant.cuisine}</p>
                 <p className="card-description">{restaurant.description}</p>
+                {tags.length > 0 && (
+                    <ul className="card-tags">
+                        {tags.map((tag) => <li key={tag}>{tag}</li>)}
+                    </ul>
+                )}
                 <div className="card-meta">
                     <span>{restaurant.neighborhood}</span>
                     <span>{restaurant.priceRange}</span>
