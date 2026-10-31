@@ -343,8 +343,10 @@ h1 {
 
 .restaurant-map {
   border: 1px solid var(--line);
+  border-radius: var(--radius);
   height: 620px;
   isolation: isolate;
+  overflow: hidden;
   width: 100%;
   z-index: 0;
 }
@@ -370,8 +372,9 @@ h1 {
 
 .map-token-notice {
   align-content: center;
-  background: var(--paper);
+  background: var(--surface);
   border: 1px solid var(--line);
+  border-radius: var(--radius);
   color: var(--ink);
   display: grid;
   gap: 10px;

@@ -60,7 +60,7 @@ function RestaurantMap({ restaurants, visible }) {
                         style={{ width: "100%", height: "100%" }}
                         mapboxAccessToken={accessToken}
                         initialViewState={{ longitude: 18.4241, latitude: -33.9249, zoom: 11 }}
-                        mapStyle="mapbox://styles/mapbox/standard"
+                        mapStyle="mapbox://styles/mapbox/light-v11"
                         onLoad={(event) => fitRestaurants(event.target, locations)}
                         cooperativeGestures
                         reuseMaps
