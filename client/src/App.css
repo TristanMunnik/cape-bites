@@ -86,7 +86,7 @@ h1 {
 
 .section-heading h2 {
   font-size: 2rem;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
@@ -103,7 +103,7 @@ h1 {
   align-items: center;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 5px 18px rgba(38, 30, 23, 0.06);
   display: flex;
   gap: 13px;
@@ -116,7 +116,7 @@ h1 {
 
 .search-bar:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(194, 79, 50, 0.14), 0 7px 20px rgba(38, 30, 23, 0.08);
+  box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.14), 0 7px 20px rgba(38, 30, 23, 0.08);
 }
 
 .search-icon {
@@ -151,7 +151,7 @@ h1 {
 }
 
 .search-bar input::placeholder {
-  color: #898378;
+  color: var(--muted);
   opacity: 1;
 }
 
@@ -211,7 +211,7 @@ h1 {
 
 .restaurant-map-marker {
   appearance: none;
-  background: #c44f32;
+  background: var(--accent);
   border: 3px solid #fff;
   border-radius: 50% 50% 50% 0;
   box-shadow: 0 2px 7px rgba(32, 36, 31, 0.35);
@@ -224,13 +224,13 @@ h1 {
 }
 
 .restaurant-map-marker:focus-visible {
-  outline: 3px solid #243c34;
+  outline: 3px solid var(--ink);
   outline-offset: 3px;
 }
 
 .map-token-notice {
   align-content: center;
-  background: #edf0e9;
+  background: var(--paper);
   border: 1px solid var(--line);
   color: var(--ink);
   display: grid;
@@ -258,12 +258,12 @@ h1 {
 }
 
 .restaurant-map-popup span {
-  color: #5f625c;
+  color: var(--muted);
   font-size: 0.8rem;
 }
 
 .restaurant-map-popup a {
-  color: #a23d26;
+  color: var(--accent);
   font-weight: 700;
 }
 
@@ -358,7 +358,7 @@ h1 {
 
 .card-title-row h3 {
   font-size: 1.45rem;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
@@ -399,6 +399,8 @@ h1 {
 }
 
 .restaurant-details {
+  border-radius: var(--radius);
+  overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--line);
   margin-top: 48px;
@@ -408,7 +410,7 @@ h1 {
   align-items: center;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   color: var(--accent);
   cursor: pointer;
   display: inline-flex;
@@ -421,13 +423,13 @@ h1 {
 }
 
 .back-button:hover {
-  background: #fff5ea;
+  background: var(--accent-soft);
   border-color: var(--accent);
   transform: translateX(-2px);
 }
 
 .back-button:focus-visible {
-  outline: 3px solid rgba(194, 79, 50, 0.25);
+  outline: 3px solid rgba(179, 38, 30, 0.25);
   outline-offset: 2px;
 }
 
@@ -449,7 +451,7 @@ h1 {
 
 .details-title-row h2 {
   font-size: 3rem;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
@@ -489,6 +491,7 @@ h1 {
 .auth-submit {
   background: var(--ink);
   border: 0;
+  border-radius: var(--radius-sm);
   color: var(--paper);
   cursor: pointer;
   font: inherit;
@@ -497,12 +500,13 @@ h1 {
 }
 
 .account-error {
-  color: #9a2f1f;
+  color: var(--accent);
   flex-basis: 100%;
   text-align: right;
 }
 
 .auth-page {
+  border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--line);
   margin: 48px auto;
@@ -538,7 +542,7 @@ h1 {
 .auth-form input {
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   color: var(--ink);
   font: inherit;
   min-height: 46px;
@@ -548,7 +552,7 @@ h1 {
 .auth-form input:focus-visible,
 .auth-submit:focus-visible,
 .account-navigation button:focus-visible {
-  outline: 3px solid rgba(194, 79, 50, 0.35);
+  outline: 3px solid rgba(179, 38, 30, 0.35);
   outline-offset: 2px;
 }
 
@@ -558,7 +562,7 @@ h1 {
 }
 
 .form-error {
-  color: #9a2f1f;
+  color: var(--accent);
   margin: 0;
 }
 
