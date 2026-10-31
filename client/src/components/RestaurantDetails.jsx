@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import RestaurantImage from "./RestaurantImage"
 
 function RestaurantDetails({ restaurant }) {
     const navigate = useNavigate()
@@ -10,7 +11,7 @@ function RestaurantDetails({ restaurant }) {
                 Home
             </button>
 
-            <div className={`details-image ${restaurant.accent}`} aria-hidden="true" />
+            <RestaurantImage restaurant={restaurant} className="details-image" />
 
             <div className="details-content">
                 <p className="eyebrow">Restaurant details</p>

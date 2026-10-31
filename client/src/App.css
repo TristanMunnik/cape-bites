@@ -347,6 +347,47 @@ h1 {
   background: #4a526e;
 }
 
+.amber {
+  background: #c98a1d;
+}
+
+.red {
+  background: #a8322a;
+}
+
+.teal {
+  background: #2c6e73;
+}
+
+.lime {
+  background: #6d8a3a;
+}
+
+.rose {
+  background: #b5566e;
+}
+
+.orange {
+  background: #c8642b;
+}
+
+.crimson {
+  background: #8e1f33;
+}
+
+.gold {
+  background: #b8932f;
+}
+
+.card-image img,
+.details-image img {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
 .card-content {
   padding: 22px;
 }
@@ -434,6 +475,7 @@ h1 {
 }
 
 .details-image {
+  position: relative;
   height: 260px;
   margin-top: 14px;
 }

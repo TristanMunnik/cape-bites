@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import RestaurantImage from "./RestaurantImage"
 
 function RestaurantCard({ restaurant }) {
     return (
@@ -6,7 +7,7 @@ function RestaurantCard({ restaurant }) {
             className="restaurant-card"
             to={`/restaurants/${restaurant.id}`}
         >
-            <div className={`card-image ${restaurant.accent}`} aria-hidden="true" />
+            <RestaurantImage restaurant={restaurant} className="card-image" loading="lazy" />
             <div className="card-content">
                 <div className="card-title-row">
                     <h3>{restaurant.name}</h3>
