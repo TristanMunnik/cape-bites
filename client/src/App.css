@@ -786,6 +786,22 @@ h1 {
   margin-top: 10px;
 }
 
+.site-footer {
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 24px 32px 32px;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  color: var(--accent);
+}
+
 @media (max-width: 700px) {
   .app-shell {
     padding: 0 20px 40px;

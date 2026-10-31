@@ -9,7 +9,7 @@ Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Tow
 ## Features
 
 - Restaurant directory backed by MongoDB Atlas, with real Cape Town listings
-- Search by name, cuisine, or neighborhood
+- Search by name, cuisine, or neighborhood, with cuisine filter chips
 - Interactive Mapbox map synced with the search results
 - Restaurant details pages with client-side routing
 - Account registration, login, and logout using server-side sessions
@@ -125,10 +125,13 @@ Base URL: `http://localhost:5000/api`
 ## Roadmap
 
 - [ ] Reviews and ratings (create, read, one review per user per restaurant)
-- [ ] Cuisine and price filters
+- [x] Cuisine filters
+- [ ] Price filters
 - [ ] Restaurant and API tests, client tests
 - [ ] Deployment and CI
 
 ## Data Note
 
 Restaurant listings are sourced from public restaurant and tourism listings and should be checked for current details. Reviews in Cape Bites are written by app users; reviews from other platforms are not copied.
+
+Restaurant photos are from [Unsplash](https://unsplash.com). They are chosen to match each restaurant's cuisine and are illustrative, so they may not show the restaurant's own food.
