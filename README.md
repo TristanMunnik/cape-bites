@@ -1,146 +1,134 @@
 # Cape Bites
 
-Cape Bites is a portfolio project for discovering and reviewing Asian restaurants in Cape Town, South Africa.
+Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Town, South Africa. Browse restaurants on a list or an interactive map, search them, and create an account. Restaurant reviews are the next feature.
 
-The app is inspired by the idea of location-based community review platforms, while using its own brand, design, data model, and user experience.
+**Live demo:** _coming soon_
 
-> Project status: React and Express foundation complete; restaurant data is stored in MongoDB Atlas, the directory includes an interactive Mapbox map, and account registration/login are implemented. Reviews are planned.
+<!-- Add screenshots here, e.g. ![Directory page](docs/directory.png) -->
 
-## MVP
+## Features
 
-MVP means Minimum Viable Product. It is the smallest useful version of the application that proves the main idea.
+- Restaurant directory backed by MongoDB Atlas, with real Cape Town listings
+- Search by name, cuisine, or neighborhood
+- Interactive Mapbox map synced with the search results
+- Restaurant details pages with client-side routing
+- Account registration, login, and logout using server-side sessions
+- Responsive layout with a list/map toggle on small screens
+- Loading, empty, and error states
 
-The first version of Cape Bites will allow users to:
+## Tech Stack
 
-- Browse Asian restaurants in Cape Town
-- Search and filter restaurants
-- View restaurant details
-- Create an account and log in
-- Read restaurant reviews
-- Leave ratings and written reviews
-
-## Planned User Flow
-
-```text
-Open the app
-  -> Browse restaurants
-  -> Search or filter restaurants
-  -> Open a restaurant details page
-  -> Read reviews
-  -> Log in or register
-  -> Leave a rating and review
-```
-
-## Planned Technology
-
-- MongoDB for storing users, restaurants, and reviews
-- Express and Node.js for the backend API
-- React for the frontend
-- JavaScript across the project
-
-## Planned Data Models
-
-### User
-
-- Username
-- Email
-- Bcrypt password hash
-
-### Restaurant
-
-- Name
-- Description
-- Cuisine
-- Cape Town neighborhood
-- Address
-- Price range
-- Image
-- Opening hours
-
-### Review
-
-- Rating
-- Comment
-- Author
-- Restaurant
-- Creation date
-
-## Planned Pages
-
-- Restaurant listing page
-- Restaurant details page
-- Registration page
-- Login page
-- Review form
-
-The interface will include loading, empty, and error states so users always understand what is happening.
+| Layer    | Technology                                                       |
+| -------- | ---------------------------------------------------------------- |
+| Frontend | React 19, React Router, Vite, Mapbox GL (react-map-gl)           |
+| Backend  | Node.js, Express 5                                               |
+| Database | MongoDB Atlas with Mongoose                                      |
+| Auth     | express-session, connect-mongo session store, bcryptjs           |
+| Testing  | Node's built-in test runner (`node --test`)                      |
 
 ## Project Structure
 
-The project will be organized into separate frontend and backend applications:
-
 ```text
-client/   React frontend
-server/   Express and Node.js backend
+client/   React frontend (Vite)
+server/   Express API
+  models/   Mongoose models (User, Restaurant)
+  routes/   Route modules (auth)
+  test/     API tests
+  seed.js   Seeds the restaurant collection
 ```
 
-## Local Development
+## Getting Started
 
-Clone the repository, then install dependencies in both applications:
+### Prerequisites
+
+- Node.js 20+
+- A free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
+- A [Mapbox](https://www.mapbox.com/) public access token
+
+### Setup
+
+```bash
+git clone <repo-url>
+cd server && npm install
+cd ../client && npm install
+```
+
+**Server:** copy `server/.env.example` to `server/.env` and fill in:
+
+| Variable         | Description                                                      |
+| ---------------- | ---------------------------------------------------------------- |
+| `MONGO_URI`      | MongoDB Atlas connection string                                  |
+| `SESSION_SECRET` | Random string of at least 32 characters                          |
+| `CLIENT_ORIGIN`  | Frontend URL allowed by CORS (default `http://localhost:5173`)   |
+
+Generate a session secret with:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+**Client:** copy `client/.env.example` to `client/.env` and fill in:
+
+| Variable                   | Description                                                  |
+| -------------------------- | ------------------------------------------------------------ |
+| `VITE_API_URL`             | API base URL (default `http://localhost:5000/api`)           |
+| `VITE_MAPBOX_ACCESS_TOKEN` | Mapbox public token (restrict it to your site URLs in Mapbox) |
+
+Never commit real `.env` files. Restart Vite after changing environment variables.
+
+### Seed the database
 
 ```bash
 cd server
-npm install
-
-cd ../client
-npm install
+npm run seed
 ```
 
-Create `server/.env` from `server/.env.example`, add your MongoDB Atlas connection string,
-and replace `SESSION_SECRET` with a random secret of at least 32 characters. You can generate
-one with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`.
-Never commit the real `.env` file.
+The seed script upserts by restaurant `id`, so it is safe to run more than once.
 
-Create `client/.env` and set `VITE_MAPBOX_ACCESS_TOKEN` to a Mapbox public access token. Restrict the token to your local and deployed website URLs in your Mapbox account. Restart Vite after changing environment variables. Never commit the real `.env` file.
-
-Run the applications in two terminals:
+### Run
 
 ```bash
-# Terminal 1
-cd server
-npm run dev
+# Terminal 1 - API on http://localhost:5000
+cd server && npm run dev
+
+# Terminal 2 - client on http://localhost:5173
+cd client && npm run dev
 ```
+
+### Test
 
 ```bash
-# Terminal 2
-cd client
-npm run dev
+cd server && npm test
 ```
 
-The client runs on Vite's local URL, usually `http://localhost:5173`.
-The Express API runs on `http://localhost:5000`.
+## API
 
-Authentication uses server-side sessions stored in MongoDB. The browser receives an HttpOnly
-session cookie; passwords are stored as bcrypt hashes, never as plain text. The API provides
-`POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`, and
-`GET /api/auth/me`.
+Base URL: `http://localhost:5000/api`
 
-Environment variables will be stored in local `.env` files and will never be committed to the repository. A safe `.env.example` file will document the required variable names.
+| Method | Endpoint               | Description                                        | Auth |
+| ------ | ---------------------- | -------------------------------------------------- | ---- |
+| GET    | `/health`              | Health check                                       | No   |
+| GET    | `/restaurants`         | List restaurants, highest rated first              | No   |
+| GET    | `/restaurants/:id`     | Get one restaurant (404 if not found)              | No   |
+| POST   | `/auth/register`       | Create an account and start a session              | No   |
+| POST   | `/auth/login`          | Log in and start a session                         | No   |
+| POST   | `/auth/logout`         | Destroy the session and clear the cookie           | No   |
+| GET    | `/auth/me`             | Return the current user, or `null`                 | No   |
 
-## Portfolio Goals
+## Technical Decisions
 
-This project is being built to demonstrate practical full-stack development skills, including:
+- **Server-side sessions instead of JWTs.** Sessions are stored in MongoDB and sent as an `HttpOnly` cookie, so JavaScript in the browser can never read the credential. Logging out destroys the session on the server, which is harder to do with stateless tokens.
+- **Passwords** are hashed with bcrypt (cost 12). Inputs are validated on the server, and the session ID is regenerated on login to prevent session fixation.
+- **GeoJSON `location` field** on each restaurant, ready for map rendering and geospatial queries.
+- **App factory (`createApp`)** takes its session store and user model as arguments, so tests can run the real app without a live database.
 
-- Designing a database-backed application
-- Building and consuming REST APIs
-- Creating React user interfaces
-- Implementing authentication and authorization
-- Validating user input
-- Handling loading and error states
-- Writing focused tests
-- Documenting technical decisions
-- Deploying a full-stack application
+## Roadmap
+
+- [ ] Reviews and ratings (create, read, one review per user per restaurant)
+- [ ] Cuisine and price filters
+- [ ] Restaurant and API tests, client tests
+- [ ] Deployment and CI
 
 ## Data Note
 
-Restaurant listings are sourced from public restaurant and tourism listings and should be checked for current details. Reviews in Cape Bites should be written by app users; do not copy reviews from other platforms.
+Restaurant listings are sourced from public restaurant and tourism listings and should be checked for current details. Reviews in Cape Bites are written by app users; reviews from other platforms are not copied.
