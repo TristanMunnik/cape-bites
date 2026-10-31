@@ -109,6 +109,7 @@ h1 {
 .result-count {
   color: var(--muted);
   font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .search-bar {
