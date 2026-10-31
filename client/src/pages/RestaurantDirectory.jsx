@@ -4,6 +4,7 @@ import RestaurantMap from "../components/RestaurantMap"
 import RestaurantList from "../components/RestaurantList"
 import SearchBar from "../components/SearchBar"
 import SiteHeader from "../components/SiteHeader"
+import { apiBaseUrl } from "../lib/api"
 
 function RestaurantDirectory() {
     const [restaurants, setRestaurants] = useState([])
@@ -15,7 +16,7 @@ function RestaurantDirectory() {
     useEffect(() => {
         async function fetchRestaurants() {
             try {
-                const response = await fetch('http://localhost:5000/api/restaurants')
+                const response = await fetch(`${apiBaseUrl}/restaurants`)
 
                 if (!response.ok) {
                     throw new Error("failed to fetch restaurants");

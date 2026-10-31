@@ -1,4 +1,4 @@
-const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+import { apiBaseUrl } from './api'
 
 export async function authRequest(path, options = {}) {
     const response = await fetch(`${apiBaseUrl}/auth${path}`, {

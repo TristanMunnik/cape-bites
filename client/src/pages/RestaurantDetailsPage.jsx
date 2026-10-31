@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import RestaurantDetails from "../components/RestaurantDetails"
+import { apiBaseUrl } from "../lib/api"
 
 
 function RestaurantDetailsPage() {
@@ -15,9 +16,7 @@ function RestaurantDetailsPage() {
     useEffect(() => {
         async function fetchRestaurant() {
             try {
-                const response = await fetch(
-                    `http://localhost:5000/api/restaurants/${id}`
-                )
+                const response = await fetch(`${apiBaseUrl}/restaurants/${id}`)
 
                 if (response.status === 404) {
                     setNotFound(true)
