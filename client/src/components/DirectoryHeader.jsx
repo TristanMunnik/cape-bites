@@ -5,7 +5,7 @@ function DirectoryHeader({ resultCount }) {
                 <p className="eyebrow">A short list to start</p>
                 <h2 id="directory-heading">Explore the directory</h2>
             </div>
-            <p className="result-count">{resultCount} places</p>
+            {resultCount != null && <p className="result-count">{resultCount} places</p>}
         </div>
     )
 }

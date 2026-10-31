@@ -1,6 +1,7 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import RestaurantDetails from "../components/RestaurantDetails"
+import StatusMessage from "../components/StatusMessage"
 import { apiBaseUrl } from "../lib/api"
 
 
@@ -39,19 +40,28 @@ function RestaurantDetailsPage() {
         fetchRestaurant()
     }, [id])
 
-    if (notFound) {
-        return <p>Restaurant not found</p>
-    }
+    const homeLink = <Link className="status-button" to="/">Back to directory</Link>
 
-    if (loading) {
-        return <p>Loading restaurant...</p>
-    }
-
-    if (error) {
-        return <p>{error}</p>
-    }
-
-    return <RestaurantDetails restaurant={restaurant} />
+    return (
+        <main className="app-shell details-page">
+            {notFound ? (
+                <StatusMessage
+                    title="Restaurant not found"
+                    message="This restaurant may have been removed."
+                >
+                    {homeLink}
+                </StatusMessage>
+            ) : loading ? (
+                <StatusMessage title="Loading restaurant..." />
+            ) : error ? (
+                <StatusMessage title={error} message="Check your connection and try again.">
+                    {homeLink}
+                </StatusMessage>
+            ) : (
+                <RestaurantDetails restaurant={restaurant} />
+            )}
+        </main>
+    )
 }
 
 export default RestaurantDetailsPage
