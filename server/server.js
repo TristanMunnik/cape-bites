@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo');
+const { MongoStore } = require('connect-mongo');
 const { createApp } = require('./app');
 
 const port = process.env.PORT || 5000;
