@@ -4,7 +4,27 @@ Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Tow
 
 **Live demo:** _coming soon_
 
-<!-- Add screenshots here, e.g. ![Directory page](docs/directory.png) -->
+## Screenshots
+
+**Home page:** hero, search, and cuisine filters
+
+![Cape Bites home page with the hero image, search bar and cuisine filter chips](docs/Home.png)
+
+**Restaurant cards and map:** photos, ratings, price guides, and an interactive map
+
+![Restaurant cards with photos, ratings and prices beside the interactive map](docs/Home2.png)
+
+**Restaurant page:** details, plus the star rating picker and review form for signed-in users
+
+![Restaurant details page with the star rating picker and review form](docs/Restaurant.png)
+
+**Reviews:** each user's review is editable and deletable, with an inline confirmation. Sample reviews are tagged.
+
+![Reviews list showing an inline delete confirmation and sample-tagged reviews](docs/Review.png)
+
+**Sign in**
+
+![Sign in page](docs/Login.png)
 
 ## Features
 
