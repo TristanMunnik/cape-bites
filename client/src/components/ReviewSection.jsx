@@ -13,6 +13,7 @@ function ReviewSection({ restaurantId, onReviewsChange }) {
     const [error, setError] = useState('')
     const [deletingId, setDeletingId] = useState('')
     const [editingId, setEditingId] = useState('')
+    const [confirmingId, setConfirmingId] = useState('')
     const [reloadKey, setReloadKey] = useState(0)
 
     useEffect(() => {
@@ -42,8 +43,6 @@ function ReviewSection({ restaurantId, onReviewsChange }) {
     }
 
     async function handleDelete(reviewId) {
-        if (!window.confirm('Delete your review?')) return
-
         setDeletingId(reviewId)
         try {
             await apiRequest(`/reviews/${reviewId}`, { method: 'DELETE' })
@@ -52,6 +51,7 @@ function ReviewSection({ restaurantId, onReviewsChange }) {
             setError(requestError.message)
         } finally {
             setDeletingId('')
+            setConfirmingId('')
         }
     }
 
@@ -83,6 +83,9 @@ function ReviewSection({ restaurantId, onReviewsChange }) {
                         currentUserId={user?.id}
                         editingId={editingId}
                         deletingId={deletingId}
+                        confirmingId={confirmingId}
+                        onAskDelete={setConfirmingId}
+                        onCancelDelete={() => setConfirmingId('')}
                         onEdit={setEditingId}
                         onCancelEdit={() => setEditingId('')}
                         onSaved={handleSaved}

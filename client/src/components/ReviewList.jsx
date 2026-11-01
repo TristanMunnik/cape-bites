@@ -9,6 +9,9 @@ function ReviewList({
     currentUserId,
     editingId,
     deletingId,
+    confirmingId,
+    onAskDelete,
+    onCancelDelete,
     onEdit,
     onCancelEdit,
     onSaved,
@@ -38,18 +41,35 @@ function ReviewList({
                             </div>
                             {review.comment && <p className="review-comment">{review.comment}</p>}
                             {review.user?._id === currentUserId && (
-                                <div className="review-actions">
-                                    <button onClick={() => onEdit(review._id)} type="button">
-                                        Edit
-                                    </button>
-                                    <button
-                                        disabled={deletingId === review._id}
-                                        onClick={() => onDelete(review._id)}
-                                        type="button"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
+                                confirmingId === review._id ? (
+                                    <div className="review-confirm" role="alert">
+                                        <span>Are you sure you want to delete this review?</span>
+                                        <button
+                                            className="review-confirm-delete"
+                                            disabled={deletingId === review._id}
+                                            onClick={() => onDelete(review._id)}
+                                            type="button"
+                                        >
+                                            {deletingId === review._id ? 'Deleting...' : 'Yes, delete'}
+                                        </button>
+                                        <button
+                                            disabled={deletingId === review._id}
+                                            onClick={onCancelDelete}
+                                            type="button"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="review-actions">
+                                        <button onClick={() => onEdit(review._id)} type="button">
+                                            Edit
+                                        </button>
+                                        <button onClick={() => onAskDelete(review._id)} type="button">
+                                            Delete
+                                        </button>
+                                    </div>
+                                )
                             )}
                         </>
                     )}

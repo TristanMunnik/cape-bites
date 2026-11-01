@@ -877,6 +877,48 @@ h1 {
   opacity: 0.6;
 }
 
+.review-confirm {
+  align-items: center;
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 10px;
+  padding: 10px 14px;
+}
+
+.review-confirm button {
+  background: none;
+  border: 0;
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.review-confirm .review-confirm-delete {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-weight: 700;
+  padding: 6px 14px;
+  text-decoration: none;
+}
+
+.review-confirm button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.review-confirm button:focus-visible {
+  outline: 3px solid rgba(179, 38, 30, 0.35);
+  outline-offset: 2px;
+}
+
 .review-edited {
   color: var(--muted);
   font-size: 0.85rem;
