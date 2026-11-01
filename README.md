@@ -1,5 +1,7 @@
 # Cape Bites
 
+[![CI](https://github.com/TristanMunnik/cape-bites/actions/workflows/ci.yml/badge.svg)](https://github.com/TristanMunnik/cape-bites/actions/workflows/ci.yml)
+
 Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Town, South Africa. Browse restaurants on a list or an interactive map, search and filter them by cuisine, create an account, and leave star ratings and written reviews.
 
 ## Screenshots
@@ -138,8 +140,12 @@ cd client && npm run dev
 ### Test
 
 ```bash
-cd server && npm test
+cd server && npm test        # API tests
+cd client && npm run lint   # lint
+cd client && npm run build  # production build
 ```
+
+The same checks run automatically on every push through GitHub Actions (`.github/workflows/ci.yml`).
 
 ## API
 
@@ -181,7 +187,7 @@ Base URL: `http://localhost:5000/api`
 - [ ] Price filters
 - [x] Restaurant and review API tests
 - [ ] Client tests
-- [ ] GitHub Actions CI (tests, lint, build)
+- [x] GitHub Actions CI (tests, lint, build)
 - [ ] Deployment
 
 ## Data Note
@@ -193,3 +199,7 @@ Price guides are approximate. They are based on average main-meal prices and men
 Reviews written by signed-up users are real. The reviews tagged "Sample" were created by `server/seed-demo.js` for demonstration, are intentionally generic, and do not reflect real customer opinions. No reviews are copied from other platforms.
 
 Restaurant photos are from [Unsplash](https://unsplash.com). They are chosen to match each restaurant's cuisine and are illustrative, so they may not show the restaurant's own food.
+
+## License
+
+Released under the [MIT License](LICENSE).
