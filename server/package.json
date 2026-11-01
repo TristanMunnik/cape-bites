@@ -1,8 +1,8 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Express API for Cape Bites: restaurants, accounts and reviews",
+  "main": "server.js",
   "scripts": {
     "test": "node --test",
     "dev": "nodemon server.js",
@@ -11,7 +11,7 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tristan Munnik",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
