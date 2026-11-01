@@ -2,12 +2,20 @@ const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
 const Restaurant = require('./models/Restaurant');
+const Review = require('./models/Review');
 const User = require('./models/User');
 const createAuthRouter = require('./routes/auth');
+const createRestaurantsRouter = require('./routes/restaurants');
+const createReviewsRouter = require('./routes/reviews');
 
 const sessionCookieName = 'cape_bites.sid';
 
-function createApp({ sessionStore, UserModel = User }) {
+function createApp({
+    sessionStore,
+    UserModel = User,
+    RestaurantModel = Restaurant,
+    ReviewModel = Review,
+}) {
     if (!sessionStore) {
         throw new Error('A persistent session store is required.');
     }
@@ -48,28 +56,9 @@ function createApp({ sessionStore, UserModel = User }) {
         cookieOptions,
     }));
 
-    app.get('/api/restaurants', async (req, res) => {
-        try {
-            const restaurants = await Restaurant.find().sort({ rating: -1, name: 1 });
-            res.json({ restaurants });
-        } catch (error) {
-            res.status(500).json({ message: 'Failed to fetch restaurants', error: error.message });
-        }
-    });
-
-    app.get('/api/restaurants/:id', async (req, res) => {
-        try {
-            const restaurant = await Restaurant.findOne({ id: Number(req.params.id) });
-
-            if (!restaurant) {
-                return res.status(404).json({ message: 'Restaurant not found' });
-            }
-
-            res.json({ restaurant });
-        } catch (error) {
-            res.status(500).json({ message: 'Failed to fetch restaurant', error: error.message });
-        }
-    });
+    const models = { Restaurant: RestaurantModel, Review: ReviewModel };
+    app.use('/api/restaurants', createRestaurantsRouter(models));
+    app.use('/api/reviews', createReviewsRouter(models));
 
     app.use((error, req, res, next) => {
         if (error.type === 'entity.parse.failed') {
