@@ -2,29 +2,27 @@
 
 Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Town, South Africa. Browse restaurants on a list or an interactive map, search and filter them by cuisine, create an account, and leave star ratings and written reviews.
 
-**Live demo:** _coming soon_
-
 ## Screenshots
 
 **Home page:** hero, search, and cuisine filters
 
-![Cape Bites home page with the hero image, search bar and cuisine filter chips](docs/Home.png)
+![Cape Bites home page with the hero image, search bar and cuisine filter chips](docs/home-page.png)
 
 **Restaurant cards and map:** photos, ratings, price guides, and an interactive map
 
-![Restaurant cards with photos, ratings and prices beside the interactive map](docs/Home2.png)
+![Restaurant cards with photos, ratings and prices beside the interactive map](docs/directory-map.png)
 
 **Restaurant page:** details, plus the star rating picker and review form for signed-in users
 
-![Restaurant details page with the star rating picker and review form](docs/Restaurant.png)
+![Restaurant details page with the star rating picker and review form](docs/restaurant-page.png)
 
 **Reviews:** each user's review is editable and deletable, with an inline confirmation. Sample reviews are tagged.
 
-![Reviews list showing an inline delete confirmation and sample-tagged reviews](docs/Review.png)
+![Reviews list showing an inline delete confirmation and sample-tagged reviews](docs/reviews.png)
 
 **Sign in**
 
-![Sign in page](docs/Login.png)
+![Sign in page](docs/sign-in.png)
 
 ## Features
 
@@ -80,7 +78,8 @@ server/   Express API
 ### Setup
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/TristanMunnik/cape-bites.git
+cd cape-bites
 cd server && npm install
 cd ../client && npm install
 ```
@@ -182,7 +181,8 @@ Base URL: `http://localhost:5000/api`
 - [ ] Price filters
 - [x] Restaurant and review API tests
 - [ ] Client tests
-- [ ] Deployment and CI
+- [ ] GitHub Actions CI (tests, lint, build)
+- [ ] Deployment
 
 ## Data Note
 
