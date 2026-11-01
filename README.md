@@ -8,13 +8,14 @@ Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Tow
 
 ## Features
 
-- Restaurant directory backed by MongoDB Atlas, with real Cape Town listings
+- Restaurant directory backed by MongoDB Atlas, with real Cape Town listings, descriptions, and approximate price guides ($ to $$$)
 - Search by name, cuisine, or neighborhood, with cuisine filter chips
 - Interactive Mapbox map that stays in sync with the search and filters
 - Restaurant cards and details pages with photos, cuisine pills, and tags
 - Account registration, login, and logout using server-side sessions
 - Star ratings and written reviews (signed-in users only, one review per restaurant, edit or delete your own)
-- Average rating and review count on every restaurant, calculated from real reviews
+- Average rating and review count on every restaurant, calculated from the reviews
+- Demo content (accounts and reviews) is clearly tagged "Sample" and can be removed with one command
 - Responsive layout with a list/map toggle on small screens
 - Loading skeletons, empty states, and error messages with a retry button
 - Fallback colours when a restaurant photo fails to load
@@ -44,7 +45,8 @@ server/   Express API
   middleware/  Shared Express middleware (requireAuth)
   lib/         Shared helpers (rating summary)
   test/        API tests
-  seed.js   Seeds the restaurant collection
+  seed.js      Seeds the restaurant collection
+  seed-demo.js Adds (or removes) labelled sample accounts and reviews
 ```
 
 ## Getting Started
@@ -94,6 +96,15 @@ npm run seed
 ```
 
 The seed script upserts by restaurant `id`, so it is safe to run more than once.
+
+Optionally add sample accounts and reviews so the app does not look empty in a demo:
+
+```bash
+npm run seed:demo             # add sample data (safe to run more than once)
+npm run seed:demo -- --remove # delete all sample accounts and reviews
+```
+
+Sample accounts use random, discarded passwords, so nobody can sign in as them. Their reviews are generic and carry a "Sample" tag in the interface.
 
 ### Run
 
@@ -155,6 +166,10 @@ Base URL: `http://localhost:5000/api`
 
 ## Data Note
 
-Restaurant listings are sourced from public restaurant and tourism listings and should be checked for current details. Reviews in Cape Bites are written by app users; reviews from other platforms are not copied.
+Restaurant listings are sourced from public restaurant and tourism listings and should be checked for current details. Descriptions are written in my own words from those listings and public reviews.
+
+Price guides are approximate. They are based on average main-meal prices and menu prices on public listings and delivery menus, which can be out of date: `$` is under R120 per main, `$$` is R120 to R250, and `$$$` is over R250. Restaurants with no usable price information show no price.
+
+Reviews written by signed-up users are real. The reviews tagged "Sample" were created by `server/seed-demo.js` for demonstration, are intentionally generic, and do not reflect real customer opinions. No reviews are copied from other platforms.
 
 Restaurant photos are from [Unsplash](https://unsplash.com). They are chosen to match each restaurant's cuisine and are illustrative, so they may not show the restaurant's own food.
