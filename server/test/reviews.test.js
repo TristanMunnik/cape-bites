@@ -65,6 +65,7 @@ function createTestReviews(users) {
                 ...details,
                 _id: String(nextId++),
                 createdAt: new Date(),
+                async save() {},
                 async deleteOne() {
                     reviews.splice(reviews.indexOf(review), 1);
                 },
@@ -256,4 +257,39 @@ test('only lets a user delete their own review, then recalculates the rating', a
     assert.equal(deleted.response.status, 200);
     assert.equal(RestaurantModel.restaurants[1].rating, null);
     assert.equal(RestaurantModel.restaurants[1].reviewCount, 0);
+});
+
+test('only lets a user edit their own review, validates it, and recalculates the rating', async (t) => {
+    const { baseUrl, RestaurantModel } = await startTestServer(t);
+    const owner = await registerDiner(baseUrl, 'editor_diner');
+    const other = await registerDiner(baseUrl, 'bystander_diner');
+    const { data } = await sendRequest(baseUrl, '/api/restaurants/1/reviews', {
+        method: 'POST',
+        cookie: owner,
+        body: { rating: 2, comment: 'Slow service.' },
+    });
+    const path = `/api/reviews/${data.review._id}`;
+    const edit = (cookie, body) => sendRequest(baseUrl, path, { method: 'PUT', cookie, body });
+
+    assert.equal((await edit(undefined, { rating: 5 })).response.status, 401);
+    assert.equal((await edit(other, { rating: 5 })).response.status, 403);
+    assert.equal(RestaurantModel.restaurants[0].rating, 2);
+
+    assert.equal((await edit(owner, { rating: 7 })).response.status, 400);
+    assert.equal((await edit(owner, { rating: 4, comment: 'x'.repeat(1001) })).response.status, 400);
+    assert.equal(
+        (await sendRequest(baseUrl, '/api/reviews/not-an-object-id', {
+            method: 'PUT',
+            cookie: owner,
+            body: { rating: 4 },
+        })).response.status,
+        404
+    );
+
+    const updated = await edit(owner, { rating: 5, comment: 'Much better on the second visit.' });
+    assert.equal(updated.response.status, 200);
+    assert.equal(updated.data.review.rating, 5);
+    assert.equal(updated.data.review.comment, 'Much better on the second visit.');
+    assert.equal(RestaurantModel.restaurants[0].rating, 5);
+    assert.equal(RestaurantModel.restaurants[0].reviewCount, 1);
 });

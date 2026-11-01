@@ -1,6 +1,7 @@
 const express = require('express');
 const requireAuth = require('../middleware/requireAuth');
 const updateRatingSummary = require('../lib/updateRatingSummary');
+const validateReview = require('../lib/validateReview');
 
 function createRestaurantsRouter({ Restaurant, Review }) {
     const router = express.Router();
@@ -54,13 +55,10 @@ function createRestaurantsRouter({ Restaurant, Review }) {
             if (!restaurant) return;
 
             const { rating, comment = '' } = req.body || {};
+            const validationError = validateReview({ rating, comment });
 
-            if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-                return res.status(400).json({ message: 'Rating must be a whole number from 1 to 5.' });
-            }
-
-            if (typeof comment !== 'string' || comment.length > 1000) {
-                return res.status(400).json({ message: 'Comment must be 1000 characters or fewer.' });
+            if (validationError) {
+                return res.status(400).json({ message: validationError });
             }
 
             const review = await Review.create({
