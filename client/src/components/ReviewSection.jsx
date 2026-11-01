@@ -12,6 +12,7 @@ function ReviewSection({ restaurantId, onReviewsChange }) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [deletingId, setDeletingId] = useState('')
+    const [editingId, setEditingId] = useState('')
     const [reloadKey, setReloadKey] = useState(0)
 
     useEffect(() => {
@@ -33,6 +34,11 @@ function ReviewSection({ restaurantId, onReviewsChange }) {
     function handleChanged() {
         setReloadKey((key) => key + 1)
         onReviewsChange()
+    }
+
+    function handleSaved() {
+        setEditingId('')
+        handleChanged()
     }
 
     async function handleDelete(reviewId) {
@@ -75,8 +81,12 @@ function ReviewSection({ restaurantId, onReviewsChange }) {
                     <ReviewList
                         reviews={reviews}
                         currentUserId={user?.id}
-                        onDelete={handleDelete}
+                        editingId={editingId}
                         deletingId={deletingId}
+                        onEdit={setEditingId}
+                        onCancelEdit={() => setEditingId('')}
+                        onSaved={handleSaved}
+                        onDelete={handleDelete}
                     />
                 </>
             )}

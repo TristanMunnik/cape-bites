@@ -715,47 +715,68 @@ h1 {
   padding: 20px;
 }
 
-.rating-picker {
+.star-rating {
   border: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
   margin: 0;
+  min-width: 0;
   padding: 0;
 }
 
-.rating-picker legend {
+.star-rating legend {
   color: var(--ink);
   font-weight: 700;
   margin-bottom: 8px;
   padding: 0;
 }
 
-.rating-picker label span {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink);
-  cursor: pointer;
-  display: inline-block;
-  min-height: 38px;
-  padding: 7px 15px;
+.star-rating-stars {
+  display: flex;
+  gap: 4px;
 }
 
-.rating-picker input {
+.star-rating label {
+  cursor: pointer;
+  display: block;
+  line-height: 0;
+  position: relative;
+}
+
+.star-rating input {
+  inset: 0;
+  margin: 0;
   opacity: 0;
   position: absolute;
 }
 
-.rating-picker input:checked + span {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
+.star-rating svg {
+  fill: var(--surface);
+  height: 40px;
+  stroke: #c9bda5;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  transition: fill 120ms ease, transform 120ms ease;
+  width: 40px;
 }
 
-.rating-picker input:focus-visible + span {
+.star-rating label.is-filled svg {
+  fill: var(--gold);
+  stroke: #b8860b;
+}
+
+.star-rating label:hover svg {
+  transform: scale(1.12);
+}
+
+.star-rating label:has(input:focus-visible) {
+  border-radius: var(--radius-sm);
   outline: 3px solid rgba(179, 38, 30, 0.35);
   outline-offset: 2px;
+}
+
+.star-rating-text {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 6px 0 0;
 }
 
 .review-comment-field {
@@ -823,21 +844,56 @@ h1 {
   margin: 6px 0 0;
 }
 
-.review-delete {
+.review-form-actions {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.review-cancel,
+.review-actions button {
   background: none;
   border: 0;
   color: var(--accent);
   cursor: pointer;
   font: inherit;
   font-size: 0.85rem;
-  margin-top: 6px;
   padding: 0;
   text-decoration: underline;
 }
 
-.review-delete:disabled {
+.review-cancel {
+  font-size: 0.95rem;
+}
+
+.review-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.review-actions button:disabled {
   cursor: wait;
   opacity: 0.6;
+}
+
+.review-edited {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.review-item .review-form {
+  margin-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-rating svg {
+    transition: none;
+  }
+
+  .star-rating label:hover svg {
+    transform: none;
+  }
 }
 
 .account-navigation {

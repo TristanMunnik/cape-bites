@@ -13,7 +13,7 @@ Cape Bites is a full-stack web app for discovering Asian restaurants in Cape Tow
 - Interactive Mapbox map that stays in sync with the search and filters
 - Restaurant cards and details pages with photos, cuisine pills, and tags
 - Account registration, login, and logout using server-side sessions
-- Star ratings and written reviews (signed-in users only, one review per restaurant, delete your own)
+- Star ratings and written reviews (signed-in users only, one review per restaurant, edit or delete your own)
 - Average rating and review count on every restaurant, calculated from real reviews
 - Responsive layout with a list/map toggle on small screens
 - Loading skeletons, empty states, and error messages with a retry button
@@ -122,6 +122,7 @@ Base URL: `http://localhost:5000/api`
 | GET    | `/restaurants/:id`     | Get one restaurant (404 if not found)              | No   |
 | GET    | `/restaurants/:id/reviews` | List a restaurant's reviews, newest first      | No   |
 | POST   | `/restaurants/:id/reviews` | Post a review: `rating` 1-5, optional `comment` | Yes  |
+| PUT    | `/reviews/:reviewId`   | Edit your own review (same fields as posting)      | Yes  |
 | DELETE | `/reviews/:reviewId`   | Delete your own review                             | Yes  |
 | POST   | `/auth/register`       | Create an account and start a session              | No   |
 | POST   | `/auth/login`          | Log in and start a session                         | No   |
@@ -133,7 +134,9 @@ Base URL: `http://localhost:5000/api`
 - **Server-side sessions instead of JWTs.** Sessions are stored in MongoDB and sent as an `HttpOnly` cookie, so JavaScript in the browser can never read the credential. Logging out destroys the session on the server, which is harder to do with stateless tokens.
 - **Passwords** are hashed with bcrypt (cost 12). Inputs are validated on the server, and the session ID is regenerated on login to prevent session fixation.
 - **One review per user per restaurant** is enforced by a compound unique index in MongoDB, not just by the API, so a double-click or a race between two requests cannot create duplicates.
-- **Authorization:** a `requireAuth` middleware protects writes, and deleting a review also checks that it belongs to the signed-in user (401 when signed out, 403 for someone else's review).
+- **Authorization:** a `requireAuth` middleware protects writes, and editing or deleting a review also checks that it belongs to the signed-in user (401 when signed out, 403 for someone else's review).
+- **Shared validation.** Posting and editing a review use the same `validateReview` helper, so the rules cannot drift apart.
+- **Accessible star rating.** The stars are real radio buttons, so keyboard and screen reader users can pick a rating. The hover preview and highlighting are plain React state and CSS.
 - **Stored average rating.** Each restaurant keeps its own `rating` and `reviewCount`, recalculated with an aggregation whenever a review is added or deleted, so listing restaurants stays fast because nothing is calculated on read.
 - **GeoJSON `location` field** on each restaurant, ready for map rendering and geospatial queries.
 - **App factory (`createApp`)** takes its session store and user model as arguments, so tests can run the real app without a live database.
@@ -143,7 +146,7 @@ Base URL: `http://localhost:5000/api`
 ## Roadmap
 
 - [x] Reviews and ratings (create, read, delete, one review per user per restaurant)
-- [ ] Edit your own review
+- [x] Edit your own review
 - [x] Cuisine filters
 - [ ] Price filters
 - [x] Restaurant and review API tests
