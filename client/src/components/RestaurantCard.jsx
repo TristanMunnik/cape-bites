@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import RatingBadge from "./RatingBadge"
 import RestaurantImage from "./RestaurantImage"
 
 function RestaurantCard({ restaurant }) {
@@ -13,9 +14,7 @@ function RestaurantCard({ restaurant }) {
             <div className="card-content">
                 <div className="card-title-row">
                     <h3>{restaurant.name}</h3>
-                    <span className="rating">
-                        {restaurant.rating == null ? 'No reviews' : `★ ${restaurant.rating}`}
-                    </span>
+                    <RatingBadge restaurant={restaurant} />
                 </div>
                 <p className="card-cuisine">{restaurant.cuisine}</p>
                 <p className="card-description">{restaurant.description}</p>

@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom"
+import RatingBadge from "./RatingBadge"
 import RestaurantImage from "./RestaurantImage"
+import ReviewSection from "./ReviewSection"
 
-function RestaurantDetails({ restaurant }) {
+function RestaurantDetails({ restaurant, onReviewsChange }) {
     const navigate = useNavigate()
 
     return (
@@ -20,9 +22,7 @@ function RestaurantDetails({ restaurant }) {
                         <h2 id="restaurant-details-heading">{restaurant.name}</h2>
                         <p className="card-cuisine">{restaurant.cuisine}</p>
                     </div>
-                    <span className="rating">
-                        {restaurant.rating == null ? 'No reviews' : `★ ${restaurant.rating}`}
-                    </span>
+                    <RatingBadge restaurant={restaurant} />
                 </div>
                 <p className="details-description">{restaurant.description}</p>
                 <div className="details-meta">
@@ -35,6 +35,8 @@ function RestaurantDetails({ restaurant }) {
                         Restaurant website
                     </a>
                 )}
+
+                <ReviewSection restaurantId={restaurant.id} onReviewsChange={onReviewsChange} />
             </div>
         </section>
     )

@@ -11,6 +11,7 @@ function RestaurantDetailsPage() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
     const [notFound, setNotFound] = useState(false)
+    const [refreshKey, setRefreshKey] = useState(0)
 
 
 
@@ -38,7 +39,7 @@ function RestaurantDetailsPage() {
         }
 
         fetchRestaurant()
-    }, [id])
+    }, [id, refreshKey])
 
     const homeLink = <Link className="status-button" to="/">Back to directory</Link>
 
@@ -58,7 +59,10 @@ function RestaurantDetailsPage() {
                     {homeLink}
                 </StatusMessage>
             ) : (
-                <RestaurantDetails restaurant={restaurant} />
+                <RestaurantDetails
+                    restaurant={restaurant}
+                    onReviewsChange={() => setRefreshKey((key) => key + 1)}
+                />
             )}
         </main>
     )
