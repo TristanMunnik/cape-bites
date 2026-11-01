@@ -6,6 +6,8 @@ const reviewSchema = new mongoose.Schema(
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
         rating: { type: Number, required: true, min: 1, max: 5 },
         comment: { type: String, trim: true, maxlength: 1000, default: '' },
+        // True for demo content created by seed-demo.js, so it can be labelled and removed.
+        isSample: { type: Boolean, default: false },
     },
     { timestamps: true }
 );

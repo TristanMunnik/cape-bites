@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import RatingBadge from "./RatingBadge"
 import RestaurantImage from "./RestaurantImage"
+import { hasListedPrice } from "../lib/restaurant"
 import ReviewSection from "./ReviewSection"
 
 function RestaurantDetails({ restaurant, onReviewsChange }) {
@@ -27,7 +28,7 @@ function RestaurantDetails({ restaurant, onReviewsChange }) {
                 <p className="details-description">{restaurant.description}</p>
                 <div className="details-meta">
                     <span>{restaurant.neighborhood}</span>
-                    <span>{restaurant.priceRange}</span>
+                    {hasListedPrice(restaurant) && <span>{restaurant.priceRange}</span>}
                 </div>
                 {restaurant.address && <p>{restaurant.address}</p>}
                 {restaurant.website && (

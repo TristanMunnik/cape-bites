@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema(
             required: true,
             select: false,
         },
+        // True for demo accounts created by seed-demo.js.
+        isSample: {
+            type: Boolean,
+            default: false,
+        },
     },
     { timestamps: true }
 );

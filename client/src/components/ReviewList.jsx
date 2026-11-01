@@ -38,6 +38,7 @@ function ReviewList({
                                     {new Date(review.createdAt).toLocaleDateString()}
                                 </time>
                                 {wasEdited(review) && <span className="review-edited">(edited)</span>}
+                                {review.isSample && <span className="review-sample">Sample</span>}
                             </div>
                             {review.comment && <p className="review-comment">{review.comment}</p>}
                             {review.user?._id === currentUserId && (

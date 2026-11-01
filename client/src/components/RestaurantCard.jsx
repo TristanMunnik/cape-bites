@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import RatingBadge from "./RatingBadge"
 import RestaurantImage from "./RestaurantImage"
+import { hasListedPrice } from "../lib/restaurant"
 
 function RestaurantCard({ restaurant }) {
     const tags = restaurant.tags.filter((tag) => tag !== restaurant.cuisine)
@@ -25,7 +26,7 @@ function RestaurantCard({ restaurant }) {
                 )}
                 <div className="card-meta">
                     <span>{restaurant.neighborhood}</span>
-                    <span>{restaurant.priceRange}</span>
+                    {hasListedPrice(restaurant) && <span className="card-price">{restaurant.priceRange}</span>}
                 </div>
             </div>
         </Link>
