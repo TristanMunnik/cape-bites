@@ -20,6 +20,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   margin: 0;
   font-family: var(--body);
